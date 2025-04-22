@@ -1,0 +1,53 @@
+/* scratch.css */
+
+/* 1. Bootstrap import */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+
+/* 2. Global body styles (bg color, font family, font color) */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a2e;                 /* custom background color */
+  font-family: 'Segoe UI', Tahoma, sans-serif;  
+  color: #f0f0f0;                            /* light font for readability */
+}
+
+/* 3. Header block (#header) with background image */
+#header {
+  background-image: url('images/comedy-bg.jpg');  /* your custom image */
+  background-size: cover;
+  background-position: center;
+  padding: 2rem;
+  text-align: center;
+  color: #ffd369;                                /* accent font color */
+}
+
+/* 4. Main content wrapper (#content) */
+#content {
+  background-color: rgba(34, 40, 49, 0.8);     /* semi‑transparent overlay */
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  font-family: 'Verdana', sans-serif;           /* a second font family */
+}
+
+/* 5. Sidebar column inside #content */
+#content .col-md-4 {
+  background-color: #393e46;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* 6. Footer block (#footer) */
+#footer {
+  background-color: #16213e;
+  text-align: center;
+  padding: 1rem;
+  color: #ffffff;
+}
+
+/* 7. On‑page anchor target */
+.scratch-anchor {
+  display: block;
+  margin-top: -80px;    /* offset for anchor */
+  visibility: hidden;
+}

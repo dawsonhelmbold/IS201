@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Number Guessing Game</title>
+  <style>
+    /* 1. Global body + font */
+    body {
+      background: #112d4e;
+      color: #f9f7f7;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    /* 2. Outer container */
+    .game-container {
+      background: #3f72af;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      width: 320px;
+      text-align: center;
+    }
+    /* 3. Header */
+    .game-container h1 {
+      margin-bottom: 0.5rem;
+      color: #f9c74f;
+    }
+    /* 4. Feedback box */
+    #feedback {
+      margin: 1rem 0;
+      padding: 0.75rem;
+      background: #dbd8e3;
+      color: #112d4e;
+      border-radius: 6px;
+      min-height: 2rem;
+    }
+    /* 5. Input & buttons */
+    .controls > * {
+      font-size: 1rem;
+      padding: 0.5rem;
+      margin: 0.25rem;
+      border: none;
+      border-radius: 4px;
+    }
+    .controls input {
+      width: 60px;
+      text-align: center;
+    }
+    .controls button {
+      background: #f66b0e;
+      color: #fff;
+      cursor: pointer;
+    }
+    .controls button:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+    /* 6. Stats section */
+    #stats {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-container">
+    <h1>Guess My Number</h1>
+
+    <div id="feedback">Pick a number 1–100!</div>
+
+    <div class="controls">
+      <input type="number" id="guess" min="1" max="100" />
+      <button id="submitBtn">Guess</button>
+      <button id="resetBtn">Restart</button>
+    </div>
+
+    <div id="stats">
+      Attempts: <span id="tries">0</span><br/>
+      Best Score: <span id="best">—</span>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      let secret = Math.ceil(Math.random()*100),
+          tries = 0,
+          best = localStorage.getItem('bestScore') || Infinity;
+
+      const feedback = document.getElementById('feedback'),
+            guessIn   = document.getElementById('guess'),
+            submitBtn = document.getElementById('submitBtn'),
+            resetBtn  = document.getElementById('resetBtn'),
+            triesSpan = document.getElementById('tries'),
+            bestSpan  = document.getElementById('best');
+
+      bestSpan.textContent = isFinite(best) ? best : '—';
+
+      submitBtn.addEventListener('click', () => {
+        const val = Number(guessIn.value);
+        if (!val || val<1 || val>100) {
+          feedback.textContent = 'Enter a valid 1–100!';
+          return;
+        }
+        tries++;
+        triesSpan.textContent = tries;
+        if (val === secret) {
+          feedback.textContent = `🎉 Correct! It was ${secret}.`;
+          submitBtn.disabled = true;
+          if (tries < best) {
+            localStorage.setItem('bestScore', tries);
+            bestSpan.textContent = tries;
+            feedback.textContent += ' New best score!';
+          }
+        } else {
+          feedback.textContent = val < secret ? 'Too low!' : 'Too high!';
+        }
+        guessIn.value = '';
+        guessIn.focus();
+      });
+
+      resetBtn.addEventListener('click', () => {
+        secret = Math.ceil(Math.random()*100);
+        tries = 0;
+        triesSpan.textContent = 0;
+        feedback.textContent = 'Pick a number 1–100!';
+        submitBtn.disabled = false;
+        guessIn.value = '';
+        guessIn.focus();
+      });
+    })();
+  </script>
+
+</body>
+</html>
